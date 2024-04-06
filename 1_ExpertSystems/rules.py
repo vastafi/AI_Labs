@@ -1,7 +1,6 @@
 from production import IF, AND, THEN, OR
 
 TOURIST_RULES = (
-
     IF(AND('(?x) has strong and muscular body',       # H1
            '(?x) has big and strong teeth',
            '(?x) has long face',
@@ -51,7 +50,6 @@ TOURIST_RULES = (
     IF(AND('(?x) is from Neolithic',                     # H15
            '(?x) has capable of fine manipulation'),
        THEN('(?x) is Homo Naledi')),
-
 )
 
 TOURIST_DATA = (
