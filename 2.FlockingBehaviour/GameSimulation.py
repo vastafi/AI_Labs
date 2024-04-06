@@ -1,9 +1,14 @@
 # Mini-Project 8: RiceRocks
 # On less performant computers the game may perform slower
 
-import SimpleGUICS2Pygame.simpleguics2pygame as simpleguies
 import math
 import random
+
+#Use SimpleGUICS2Pygame
+try:
+    import simplegui
+except ImportError:
+    import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
 
 # Globals		 
 DIMENSIONS = 2
