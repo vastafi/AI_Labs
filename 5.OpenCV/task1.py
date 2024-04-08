@@ -12,11 +12,11 @@ def blur_image(input_path, output_path=None, kernel_size=(3, 3), sigmaX=20):
 
     plt.subplot(1, 2, 1)
     plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-    plt.title('Original Image')
+    plt.title('Original image')
 
     plt.subplot(1, 2, 2)
     plt.imshow(cv2.cvtColor(blurred_image, cv2.COLOR_BGR2RGB))
-    plt.title('Blurred Image')
+    plt.title('Blurred image')
 
     plt.show()
 
@@ -38,11 +38,11 @@ def sharpen_image(input_path, output_path=None, strength=2.5):
 
     plt.subplot(1, 2, 1)
     plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-    plt.title('Original Image')
+    plt.title('Original image')
 
     plt.subplot(1, 2, 2)
     plt.imshow(cv2.cvtColor(sharpened_image, cv2.COLOR_BGR2RGB))
-    plt.title('Sharpened Image')
+    plt.title('Sharpened image')
 
     plt.show()
 

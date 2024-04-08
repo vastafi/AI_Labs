@@ -14,11 +14,11 @@ def blur_image(input_path, output_path=None, kernel_size=(3, 3), sigmaX=20):
 
     plt.subplot(1, 2, 1)
     plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-    plt.title('Original Image')
+    plt.title('Original image')
 
     plt.subplot(1, 2, 2)
     plt.imshow(cv2.cvtColor(blurred_image, cv2.COLOR_BGR2RGB))
-    plt.title('Blurred Image')
+    plt.title('Blurred image')
 
     plt.show()
 
@@ -40,11 +40,11 @@ def sharpen_image(input_path, output_path=None, strength=2.5):
 
     plt.subplot(1, 2, 1)
     plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-    plt.title('Original Image')
+    plt.title('Original image')
 
     plt.subplot(1, 2, 2)
     plt.imshow(cv2.cvtColor(sharpened_image, cv2.COLOR_BGR2RGB))
-    plt.title('Sharpened Image')
+    plt.title('Sharpened image')
 
     plt.show()
 
@@ -141,10 +141,10 @@ plt.show()
 
 
 #Task4
-def calculate_accuracy(test_df, images_folder):
+def calculate_accuracy(total_images, images_folder):
     correct_predictions = 0
 
-    for _, row in test_df.iterrows():
+    for _, row in total_images.iterrows():
         image_path = os.path.join(images_folder, row['new_path'])
         # print("Verify path:", image_path)
         is_valid, _ = check_passport_photo(image_path)
@@ -152,7 +152,7 @@ def calculate_accuracy(test_df, images_folder):
         if is_valid == row['label']:
             correct_predictions += 1
 
-    accuracy = correct_predictions / len(test_df)
+    accuracy = correct_predictions / len(total_images)
     return accuracy
 
 csv_file_path = '/Users/astafivalentina/PycharmProjects/AILabs/5.OpenCV/test.csv'
@@ -164,8 +164,8 @@ csv_file_path = '/Users/astafivalentina/PycharmProjects/AILabs/5.OpenCV/test.csv
 #     print(f"Error to upload CSV file: {e}")
 
 images_folder = '/Users/astafivalentina/PycharmProjects/AILabs/5.OpenCV/'
-test_df = pd.read_csv(csv_file_path)
+total_images = pd.read_csv(csv_file_path)
 
-accuracy = calculate_accuracy(test_df, images_folder)
-print(f"System Accuracy: {accuracy:.2f}")
+accuracy = calculate_accuracy(total_images, images_folder)
+print(f"System accuracy: {accuracy:.2f}")
 
