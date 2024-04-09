@@ -61,26 +61,20 @@ def backward_chain(rules, hypothesis, verbose=False):
 
     backward_chain_result = [hypothesis]
     for rule in rules:
-        # get "THEN" part of the statement
         action = rule.consequent().__repr__()
-        # get conditions of the statement
         condition = rule.antecedent()
-        # finding the math between input text and current node
         node_matching = match(action, hypothesis)
-        # if match is found iterate through the tree
         if not (node_matching is None) and all(isinstance(val, str) for val in condition.conditions()):
             if isinstance(condition, (OR, AND)):
                 # in case and/or instance [subtree], set the new call the backward chaining on the identified subtree
                 for index in range(len(condition)):
                     new_hypothesis = populate(condition[index], node_matching)
                     condition[index] = backward_chain(rules, new_hypothesis)
-                # appending the simplified result to bring tree to the canonic form
                 backward_chain_result.append(simplify(condition))
             else:
-                # in case simple node, append it to the list of nodes
                 new_node = populate(condition, node_matching)
                 backward_chain_result.append(new_node)
-    # return the result (just the hypothesis in case it doesn't belong to the tree)
+
     return backward_chain_result
 
 

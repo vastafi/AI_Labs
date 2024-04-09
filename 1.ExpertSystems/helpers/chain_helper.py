@@ -49,7 +49,6 @@ def forward(
     """
     print("Forward chain mode initiated.")
 
-    # Initialize lists to store known rules and used rules
     known_rules = []
     used_rules = []
 

@@ -6,7 +6,6 @@ def run_expert_system():
 
     while not stop_system:
 
-        # Get initial user session data
         input_name = input("Please provide the name of the tourist:")
         input_mode = extract_multiple_choice_answer(["Forward chain", "Backward chain"])
         session_data = {"name": input_name, "mode": input_mode}
