@@ -17,3 +17,4 @@ if __name__=='__main__':
     print("\nPerforming Backward Chaining")
     print("\nHypothesis:", hypothesis)
     results = backward_chain(TOURIST_RULES, hypothesis)
+    print("Result of Backward Chaining:", results)

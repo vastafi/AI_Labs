@@ -77,36 +77,6 @@ def backward_chain(rules, hypothesis, verbose=False):
 
     return backward_chain_result
 
-# def backward_chain(rules, hypothesis, verbose=False):
-#     """
-#     Outputs the goal tree from having rules and hypothesis, works like an "encyclopedia"
-#     """
-#     goal_tree = {}
-#     hypothesis_str = hypothesis.split(' ', 1)[1]
-#
-#     new_antecedents_added = True
-#
-#     while new_antecedents_added:
-#         new_antecedents_added = False
-#
-#     for rule in rules:
-#         consequent = rule.consequent()
-#
-#         if consequent:
-#             consequent_str = str(consequent)
-#             consequent_parts = consequent_str.split(' ', 1)
-#
-#             if len(consequent_parts) > 1:
-#                 consequent_str = consequent_parts[1].rstrip("')")
-#                 if consequent_str == hypothesis_str:
-#                     antecedent = rule.antecedent()
-#                     if consequent_str not in goal_tree:
-#                         goal_tree[consequent_str] = []
-#                     if antecedent and antecedent not in goal_tree[consequent_str]:
-#                         goal_tree[consequent_str].append(antecedent)
-#
-#     print(goal_tree)
-#     return goal_tree
 def instantiate(template, values_dict):
     """
     Given an expression ('template') with variables in it,
