@@ -122,7 +122,6 @@ def backward(
     if len(character_info) <= 1:
         print("It seems you are describing a Loonie!")
     else:
-        # print(f"Detailed information about {session_data.get("name")}:\n")
         print(f"Detailed information about {session_data.get('name')}:\n")
         for fact in character_info:
             if fact == user_type:

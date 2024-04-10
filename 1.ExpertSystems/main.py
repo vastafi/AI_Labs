@@ -6,7 +6,7 @@ from production import forward_chain, backward_chain
 
 if __name__=='__main__':
 
-    hypothesis = "John is Homo Sapiens"
+    hypothesis = "Tourists is Homo Sapiens"
 
     # Forward Chaining
     print("Performing Forward Chaining")
