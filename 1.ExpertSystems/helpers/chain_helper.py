@@ -55,7 +55,7 @@ def forward(
     # Create a set with known conditions
     not_start_nodes = set()
     for rule in general_rules:
-        leaf_rule = rule.consequent().__repr__()
+        leaf_rule = rule.consequent().__repr__()  # get a string representation of the rules and stores it in leaf_rule
         not_start_nodes.add(leaf_rule)
     rules_tree = generate_question_tree(known_rules, used_rules)
     condition_nodes = rules_tree.keys()

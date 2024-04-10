@@ -61,7 +61,7 @@ def backward_chain(rules, hypothesis, verbose=False):
 
     backward_chain_result = [hypothesis]
     for rule in rules:
-        action = rule.consequent().__repr__()
+        action = rule.consequent().__repr__()      # check if (the TEN part) matches the hypothesis.
         condition = rule.antecedent()
         node_matching = match(action, hypothesis)
         if not (node_matching is None) and all(isinstance(val, str) for val in condition.conditions()):
