@@ -1,30 +1,59 @@
 import pandas as pd
-def predict_new_house_price(model, new_data):
-    """
-    Predict the price of a new house using the trained linear regression model.
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from readData import load_and_process_data, file_path
 
-    Parameters:
-    - model: The trained linear regression model.
-    - new_data: A dictionary containing the features of the new house. Keys are feature names, and values are the corresponding values.
 
-    Returns:
-    - The predicted price of the new house.
-    """
-    # Transform the new data into a DataFrame to match the expected input by the model
-    new_house = {
-        'complexAge': [10],
-        'totalRooms': [7],
-        'totalBedrooms': [4],
-        'complexInhabitants': [3],
-        'apartmentsNr': [2]
-    }
+data_set = load_and_process_data(file_path)
 
-    new_house_df = pd.DataFrame([new_data])
+# Select only the columns of interest
+interested_columns = ['complexAge', 'totalRooms', 'totalBedrooms', 'complexInhabitants', 'apartmentsNr', 'medianCompexValue']
+data_set_interest = data_set[interested_columns]
 
-    # Use the trained model to make a prediction
-    predicted_price = model.predict(new_house)
+# Define the features and the target variable
+x = data_set_interest.drop('medianCompexValue', axis=1)
+y = data_set_interest['medianCompexValue']
 
-    return predicted_price[0]
+# Split the dataset into training (80%) and testing (20%) sets
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
 
-predicted_price = predict_new_house_price(trained_model, new_house_data)
-print(f"Prețul prezis pentru casa nouă este: {predicted_price}")
+# Initialize the Linear Regression model
+model = LinearRegression()
+
+# Fit the model to the training data
+model.fit(x_train, y_train)
+
+feature_names = ['complexAge', 'totalRooms', 'totalBedrooms', 'complexInhabitants', 'apartmentsNr']
+
+# New house features for prediction
+new_house_features = {
+    'complexAge': [10],
+    'totalRooms': [3000],
+    'totalBedrooms': [500],
+    'complexInhabitants': [800],
+    'apartmentsNr': [400]
+}
+
+# Convert the features into a pandas DataFrame
+new_house_df = pd.DataFrame(new_house_features, columns=feature_names)
+
+# Predict using the model
+predicted_price = model.predict(new_house_df)
+
+print(f"Predicted median complex value for the new house: {predicted_price[0]}")
+
+# Plot the distribution of 'medianCompexValue'
+plt.figure(figsize=(10, 6))
+sns.histplot(data_set_interest['medianCompexValue'], kde=True, color="blue", label='Distribution of Prices')
+
+# Mark the predicted price on the plot
+plt.axvline(x=predicted_price[0], color='red', linestyle='--', linewidth=2, label='Predicted Price')
+
+plt.xlabel('Median complex value')
+plt.ylabel('Frequency')
+plt.title('Distribution of median complex value with prediction')
+plt.legend()
+
+plt.show()
