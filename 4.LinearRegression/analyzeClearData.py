@@ -2,9 +2,6 @@ from matplotlib import pyplot as plt
 import seaborn as sns
 from readData import load_and_process_data, file_path
 
-def interested_columns():
-    return ['complexAge', 'totalRooms', 'totalBedrooms', 'complexInhabitants', 'apartmentsNr', 'medianCompexValue']
-
 def analyze_data(data_set):
     # Pandas describe() is used to view some basic statistical details of a data frame
     print(data_set.describe())
@@ -15,10 +12,13 @@ def analyze_data(data_set):
     # Pandas info() function is used to get a concise summary of the dataframe.
     print(data_set.info())
 
-    plot_pairplot(data_set, interested_columns())
-    plot_heatmap(data_set, interested_columns())
-    plot_distribution(data_set, interested_columns())
-    plot_boxplot(data_set, interested_columns())
+    interested_columns = ['complexAge', 'totalRooms', 'totalBedrooms', 'complexInhabitants', 'apartmentsNr',
+                          'medianCompexValue']
+
+    plot_pairplot(data_set, interested_columns)
+    plot_heatmap(data_set, interested_columns)
+    plot_distribution(data_set, interested_columns)
+    plot_boxplot(data_set, interested_columns)
 
     return data_set
 

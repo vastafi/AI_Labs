@@ -30,11 +30,10 @@ def display_interested_data(data_set):
     data_set_interest = data_set[interested_columns]
 
     # Display the first few rows of the DataFrame with only the interested columns
-    print(data_set_interest.head())
+    print(data_set_interest)
 
 
 data_set = load_and_process_data(file_path)
-
 # print(data_set)
 
 display_interested_data(data_set)

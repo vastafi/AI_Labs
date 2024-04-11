@@ -26,13 +26,9 @@ column_names = ['longitude', 'latitude', 'complexAge', 'totalRooms', 'totalBedro
 # Create a DataFrame from the data list
 data_set = pd.DataFrame(data, columns=column_names)
 
-
-
 # Select only the columns of interest
 interested_columns = ['complexAge', 'totalRooms', 'totalBedrooms', 'complexInhabitants', 'apartmentsNr', 'medianCompexValue']
 data_set_interest = data_set[interested_columns]
-
-
 
 # Generate descriptive statistics
 descriptive_stats = data_set_interest.describe()

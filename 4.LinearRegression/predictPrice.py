@@ -22,7 +22,7 @@ def predict_new_house_price(model, new_data):
     new_house_df = pd.DataFrame([new_data])
 
     # Use the trained model to make a prediction
-    predicted_price = model.predict(new_house_df)
+    predicted_price = model.predict(new_house)
 
     return predicted_price[0]
 
