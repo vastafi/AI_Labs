@@ -26,19 +26,17 @@ column_names = ['longitude', 'latitude', 'complexAge', 'totalRooms', 'totalBedro
 # Create a DataFrame from the data list
 data_set = pd.DataFrame(data, columns=column_names)
 
-# Check the loaded data
-print(data_set.head())
+
 
 # Select only the columns of interest
 interested_columns = ['complexAge', 'totalRooms', 'totalBedrooms', 'complexInhabitants', 'apartmentsNr', 'medianCompexValue']
 data_set_interest = data_set[interested_columns]
 
-# Display the first few rows of the DataFrame with only the interested columns
-print(data_set_interest.head())
+
 
 # Generate descriptive statistics
 descriptive_stats = data_set_interest.describe()
-print(descriptive_stats)
+
 
 # Check for missing values in the dataset
 print(data_set_interest.isnull().sum())
@@ -54,23 +52,7 @@ data_set_interest.hist(bins=50, figsize=(20, 15))
 plt.show()
 
 # Visualize data distribution for each column
-for column in interested_columns:
-    plt.figure(figsize=(10, 6))
-    plt.hist(data_set_interest[column], bins=50, alpha=0.7, label=str(column))
-    plt.xlabel(column)
-    plt.ylabel('Frequency')
-    plt.title(f'Distribution of {column}')
-    plt.legend()
-    plt.show()
 
-# Boxplots for Identifying Outliers
-for column in interested_columns:
-    plt.figure(figsize=(10, 6))
-    plt.boxplot(data_set_interest[column], vert=False)
-    plt.xlabel(column)
-    plt.title(f'Boxplot of {column}')
-    plt.grid(True)
-    plt.show()
 
 # Task 2
 
@@ -104,16 +86,16 @@ print(f"Test R-squared Score: {test_r2}")
 
 # Actual vs Predicted
 plt.scatter(y_test, y_test_pred)
-plt.xlabel('Actual Values')
-plt.ylabel('Predicted Values')
-plt.title('Actual vs Predicted Values')
+plt.xlabel('Actual values')
+plt.ylabel('Predicted values')
+plt.title('Actual vs Predicted values')
 plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'k--')
 plt.show()
 
 # Residuals Plot
 residuals = y_test - y_test_pred
 plt.scatter(y_test_pred, residuals)
-plt.xlabel('Predicted Values')
+plt.xlabel('Predicted values')
 plt.ylabel('Residuals')
 plt.hlines(y=0, xmin=y_test_pred.min(), xmax=y_test_pred.max(), colors='red')
 plt.title('Residuals Plot')
