@@ -4,9 +4,9 @@ from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
 from analyzeClearData import data_set_clean
 
-def linear_regression_analysis(data_set):
-    x = data_set.drop('medianCompexValue', axis=1)
-    y = data_set['medianCompexValue']
+def linear_regression_analysis(data_set_clean):
+    x = data_set_clean.drop('medianCompexValue', axis=1)
+    y =data_set_clean['medianCompexValue']
 
     # Split the dataset into training (80%) and testing (20%) sets
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)

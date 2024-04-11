@@ -1,7 +1,6 @@
 from matplotlib import pyplot as plt
 import seaborn as sns
-from readData import load_and_process_data, file_path
-
+from readData import load_and_process_data, file_path, display_interested_data
 def analyze_data(data_set):
     # Pandas describe() is used to view some basic statistical details of a data frame
     print(data_set.describe())
@@ -31,7 +30,6 @@ def clean_data(data_set):
     # For each numeric column, replace the missing values with the median
     for column in numeric_columns:
         data_set[column] = data_set[column].fillna(data_set[column].median())
-
 
     # For each categorical column, replace the missing values with the mod
     categorical_columns = data_set[interested_columns].select_dtypes(include=['object']).columns
@@ -94,4 +92,4 @@ data_set = load_and_process_data(file_path)
 
 
 data_set_clean = clean_data(data_set)
-print(data_set_clean)
+display_interested_data(data_set_clean)
