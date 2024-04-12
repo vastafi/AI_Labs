@@ -64,7 +64,7 @@ def backward_chain(rules, hypothesis, verbose=False):
         action = rule.consequent().__repr__()      # check if (the TEN part) matches the hypothesis.
         condition = rule.antecedent()
         node_matching = match(action, hypothesis)
-        if not (node_matching is None) and all(isinstance(val, str) for val in condition.conditions()):
+        if not (node_matching is None) and all(isinstance(val, str) for val in condition.conditions()): # check if a match is found and if all conditions are strings,
             if isinstance(condition, (OR, AND)):
                 # in case and/or instance [subtree], set the new call the backward chaining on the identified subtree
                 for index in range(len(condition)):
