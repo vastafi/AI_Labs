@@ -58,7 +58,6 @@ def backward_chain(rules, hypothesis, verbose=False):
     """
     Outputs the goal tree from having rules and hyphothesis, works like an "encyclopedia"
     """
-
     backward_chain_result = [hypothesis]
     for rule in rules:
         action = rule.consequent().__repr__()      # check if (the TEN part) matches the hypothesis.

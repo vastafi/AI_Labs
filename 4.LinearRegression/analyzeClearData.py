@@ -2,13 +2,9 @@ from matplotlib import pyplot as plt
 import seaborn as sns
 from readData import load_and_process_data, file_path, display_interested_data
 def analyze_data(data_set):
-    # Pandas describe() is used to view some basic statistical details of a data frame
+
     print(data_set.describe())
-
-    # Check for missing values in the dataset
     print(data_set.isnull().sum())
-
-    # Pandas info() function is used to get a concise summary of the dataframe.
     print(data_set.info())
 
     interested_columns = ['complexAge', 'totalRooms', 'totalBedrooms', 'complexInhabitants', 'apartmentsNr',
@@ -27,11 +23,10 @@ def clean_data(data_set):
                           'medianCompexValue']
 
     numeric_columns = data_set[interested_columns].select_dtypes(include=['float64', 'int64']).columns
-    # For each numeric column, replace the missing values with the median
+
     for column in numeric_columns:
         data_set[column] = data_set[column].fillna(data_set[column].median())
 
-    # For each categorical column, replace the missing values with the mod
     categorical_columns = data_set[interested_columns].select_dtypes(include=['object']).columns
 
     for column in categorical_columns:

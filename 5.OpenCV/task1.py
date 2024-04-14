@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 #Blur function
 image_path = '/Users/astafivalentina/PycharmProjects/AILabs/5.OpenCV/test_images/33C8EE.jpg'
 
-def blur_image(input_path, output_path=None, kernel_size=(3, 3), sigmaX=20):
+def blur_image(input_path, output_path=None, kernel_size=(5, 5), sigmaX=30):
     image = cv2.imread(input_path)
 
     blurred_image = cv2.GaussianBlur(image, kernel_size, sigmaX)
@@ -25,16 +25,16 @@ def blur_image(input_path, output_path=None, kernel_size=(3, 3), sigmaX=20):
 
 blur_image(image_path, output_path='/Users/astafivalentina/PycharmProjects/AILabs/5.OpenCV/image_tasks/image_task_1_blurred.jpg', kernel_size=(15, 15), sigmaX=0)
 
-#Sharpening function
+# Sharpening function
 
 image_path = '/Users/astafivalentina/PycharmProjects/AILabs/5.OpenCV/test_images/4CA327.jpg'
-def sharpen_image(input_path, output_path=None, strength=2.5):
+def sharpen_image(input_path, output_path=None, strength=2):
 
     image = cv2.imread(input_path)
     blurred_image = cv2.GaussianBlur(image, (0, 0), 10)
 
-    sharpened_image = cv2.addWeighted(image, 1.0 + strength, blurred_image, -strength, 0)
-    plt.figure(figsize=(12, 6))
+    sharpened_image = cv2.addWeighted(image, 1.5 + strength, blurred_image, -strength, 0)
+    plt.figure(figsize=(10, 5))
 
     plt.subplot(1, 2, 1)
     plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))

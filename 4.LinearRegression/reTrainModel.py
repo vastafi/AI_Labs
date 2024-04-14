@@ -9,17 +9,13 @@ def linear_regression_analysis(data_set_clean):
     # Split the dataset into training (80%) and testing (20%) sets
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
 
-    # Initialize the Linear Regression model
     model = LinearRegression()
 
-    # Fit the model to the training data
     model.fit(x_train, y_train)
 
-    # Predict on the training set and the test set
     y_train_pred = model.predict(x_train)
     y_test_pred = model.predict(x_test)
 
-    # Calculate the model's performance metrics
     train_mse = mean_squared_error(y_train, y_train_pred)
     test_mse = mean_squared_error(y_test, y_test_pred)
     train_r2 = r2_score(y_train, y_train_pred)
@@ -39,17 +35,13 @@ def ridge_regression_analysis(data_set_clean, alpha=1.0):
     # Split the dataset into training (80%) and testing (20%) sets
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
 
-    # Initialize the Ridge Regression model with the specified alpha value
     model = Ridge(alpha=alpha)
 
-    # Fit the model to the training data
     model.fit(x_train, y_train)
 
-    # Predict on the training set and the test set
     y_train_pred = model.predict(x_train)
     y_test_pred = model.predict(x_test)
 
-    # Calculate the model's performance metrics
     train_mse = mean_squared_error(y_train, y_train_pred)
     test_mse = mean_squared_error(y_test, y_test_pred)
     train_r2 = r2_score(y_train, y_train_pred)
@@ -70,17 +62,13 @@ def lasso_regression_analysis(data_set_clean, alpha=1.0):
     # Split the dataset into training (80%) and testing (20%) sets
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
 
-    # Initialize the Lasso Regression model with the specified alpha value
     model = Lasso(alpha=alpha)
 
-    # Fit the model to the training data
     model.fit(x_train, y_train)
 
-    # Predict on the training set and the test set
     y_train_pred = model.predict(x_train)
     y_test_pred = model.predict(x_test)
 
-    # Calculate the model's performance metrics
     train_mse = mean_squared_error(y_train, y_train_pred)
     test_mse = mean_squared_error(y_test, y_test_pred)
     train_r2 = r2_score(y_train, y_train_pred)
@@ -101,17 +89,13 @@ def elastic_net_regression_analysis(data_set_clean, alpha=1.0, l1_ratio=0.5):
     # Split the dataset into training (80%) and testing (20%) sets
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
 
-    # Initialize the Elastic Net Regression model with the specified alpha and l1_ratio values
     model = ElasticNet(alpha=alpha, l1_ratio=l1_ratio)
 
-    # Fit the model to the training data
     model.fit(x_train, y_train)
 
-    # Predict on the training set and the test set
     y_train_pred = model.predict(x_train)
     y_test_pred = model.predict(x_test)
 
-    # Calculate the model's performance metrics
     train_mse = mean_squared_error(y_train, y_train_pred)
     test_mse = mean_squared_error(y_test, y_test_pred)
     train_r2 = r2_score(y_train, y_train_pred)

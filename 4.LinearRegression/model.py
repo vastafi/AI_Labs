@@ -93,7 +93,6 @@ print(f"Test MSE: {elastic_test_mse}")
 print(f"Training R²: {elastic_train_r2}")
 print(f"Test R²: {elastic_test_r2}")
 
-# Define a set of alpha values for Ridge regression
 parameters = {'alpha': [0.01, 0.1, 1.0, 10.0, 100.0]}
 
 ridge = Ridge()
@@ -109,7 +108,6 @@ train_mse_scores = [linear_train_mse, ridge_train_mse, lasso_train_mse, elastic_
 test_mse_scores = [linear_test_mse, ridge_test_mse, lasso_test_mse, elastic_test_mse]
 train_r2_scores = [linear_train_r2, ridge_train_r2, lasso_train_r2, elastic_train_r2]
 test_r2_scores = [linear_test_r2, ridge_test_r2, lasso_test_r2, elastic_test_r2]
-
 
 # Models names
 models = ['Linear', 'Ridge', 'Lasso', 'Elastic Net']

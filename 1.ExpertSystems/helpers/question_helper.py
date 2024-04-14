@@ -68,7 +68,6 @@ def generate_multiple_choice_questions(question_choices):
                "\n".join([f"{i + 1}. {question_choices[i].replace('(?x) ', '')}" for i in range(len(question_choices))])
     return question
 
-
 def generate_yes_no_questions(question_content):
     """Generates a yes/no question based on the question content.
     

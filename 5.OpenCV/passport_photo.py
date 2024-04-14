@@ -27,7 +27,7 @@ def check_passport_photo(image_path):
         return False, "No or multiple faces detected"
 
     x, y, w, h = faces[0]
-    roi_gray = gray[y:y+h, x:x+w]
+    roi_gray = gray[y:y+h, x:x+w] # regiunea de interes
 
     eyes = eye_cascade.detectMultiScale(roi_gray)
 

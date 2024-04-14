@@ -8,7 +8,6 @@ from readData import load_and_process_data, file_path
 
 data_set = load_and_process_data(file_path)
 
-# Select only the columns of interest
 interested_columns = ['complexAge', 'totalRooms', 'totalBedrooms', 'complexInhabitants', 'apartmentsNr', 'medianCompexValue']
 data_set_interest = data_set[interested_columns]
 
@@ -19,15 +18,12 @@ y = data_set_interest['medianCompexValue']
 # Split the dataset into training (80%) and testing (20%) sets
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
 
-# Initialize the Linear Regression model
 model = LinearRegression()
 
-# Fit the model to the training data
 model.fit(x_train, y_train)
 
 feature_names = ['complexAge', 'totalRooms', 'totalBedrooms', 'complexInhabitants', 'apartmentsNr']
 
-# New house features for prediction
 new_house_features = {
     'complexAge': [10],
     'totalRooms': [3000],
@@ -36,10 +32,8 @@ new_house_features = {
     'apartmentsNr': [400]
 }
 
-# Convert the features into a pandas DataFrame
 new_house_df = pd.DataFrame(new_house_features, columns=feature_names)
 
-# Predict using the model
 predicted_price = model.predict(new_house_df)
 
 print(f"Predicted median complex value for the new house: {predicted_price[0]}")

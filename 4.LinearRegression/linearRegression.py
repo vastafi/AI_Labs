@@ -11,17 +11,13 @@ def linear_regression_analysis(data_set_clean):
     # Split the dataset into training (80%) and testing (20%) sets
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
 
-    # Initialize the Linear Regression model
     model = LinearRegression()
 
-    # Fit the model to the training data
     model.fit(x_train, y_train)
 
-    # Predict on the training set and the test set
     y_train_pred = model.predict(x_train)
     y_test_pred = model.predict(x_test)
 
-    # Calculate the model's performance metrics
     train_mse = mean_squared_error(y_train, y_train_pred)
     test_mse = mean_squared_error(y_test, y_test_pred)
     train_r2 = r2_score(y_train, y_train_pred)

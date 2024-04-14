@@ -2,17 +2,15 @@ from matplotlib import pyplot as plt
 import seaborn as sns
 from analyzeClearData import data_set_clean
 
-# Set up a figure for subplotting
-plt.figure(figsize=(18, 12))  # Adjust the figure size as needed
 
-# Scatter plot: Age vs. Price
+plt.figure(figsize=(18, 12))
+
 plt.subplot(2, 3, 1)
 plt.scatter(data_set_clean['complexAge'], data_set_clean['medianCompexValue'], color="blue")
 plt.title("Dependency between age and price")
 plt.xlabel("Complex age")
 plt.ylabel("Price in U/M")
 
-# Scatter plot: Total Rooms vs. Price
 plt.subplot(2, 3, 2)
 plt.scatter(data_set_clean['totalRooms'], data_set_clean['medianCompexValue'], color="red")
 plt.title("Dependency between number of rooms and price")
