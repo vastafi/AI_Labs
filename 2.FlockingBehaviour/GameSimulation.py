@@ -1,14 +1,9 @@
 # Mini-Project 8: RiceRocks
 # On less performant computers the game may perform slower
 
+import simplegui
 import math
 import random
-
-#Use SimpleGUICS2Pygame
-try:
-    import simplegui
-except ImportError:
-    import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
 
 # Globals		 
 DIMENSIONS = 2
@@ -51,6 +46,30 @@ class ImageInfo:
     def get_animated(self):
         return self.animated
     
+
+class VectorList:
+    def vector_norm(self, vector):
+        return sum([x**2 for x in vector])**0.5
+    
+    def vector_add(self, vector1, vector2):
+        return [x + y for x, y in zip(vector1, vector2)]
+    
+    def vector_subtract(self, vector1, vector2):
+        return [x - y for x, y in zip(vector1, vector2)]
+    
+    def vector_multiply(self, vector, scalar):
+        return [x * scalar for x in vector]
+    
+    def vector_division(self, vector, scalar):
+        return [x / scalar for x in vector]
+    
+    def dot_product(self, vector1, vector2):
+        return sum([x * y for x, y in zip(vector1, vector2)])
+    
+    def cross_product(self, vector1, vector2):
+        return [vector1[1] * vector2[2] - vector1[2] * vector2[1],
+                vector1[2] * vector2[0] - vector1[0] * vector2[2],
+                vector1[0] * vector2[1] - vector1[1] * vector2[0]]
 # Art assets created by Kim Lathrop, may be freely re-used in non-commercial projects, please credit Kim
     
 # Debris images - debris1_brown.png, debris2_brown.png, debris3_brown.png, debris4_brown.png
@@ -148,7 +167,110 @@ def group_group_collide(rock_group, missile_group):
             missile_group.discard(missile) 
     
     return rocks_destroyed
-      
+
+class Boid:
+    def __init__(self, position, velocity, max_speed, max_force, separation_radius, alignment_radius, cohesion_radius, evade_radius, attack_radius):
+        self.position = position
+        self.velocity = velocity
+        self.max_speed = max_speed
+        self.max_force = max_force
+        self.separation_radius = separation_radius
+        self.alignment_radius = alignment_radius
+        self.cohesion_radius = cohesion_radius
+        self.evade_radius = evade_radius
+        self.attack_radius = attack_radius
+        self.vector_list = VectorList()
+    
+    def separation(self, boids):
+        steering = [0, 0]
+        count = 0
+        for boid in boids:
+            distance = self.vector_list.vector_norm(self.vector_list.vector_subtract(self.position, boid.position))
+            if distance > 0 and distance < self.separation_radius:
+                diff = self.vector_list.vector_subtract(self.position, boid.position)
+                diff = self.vector_list.vector_division(diff, distance)
+                steering = self.vector_list.vector_add(steering, diff)
+                count += 1
+        if count > 0:
+            steering = self.vector_list.vector_division(steering, count)
+        if self.vector_list.vector_norm(steering) > 0:
+            steering = self.vector_list.vector_division(steering, self.vector_list.vector_norm(steering))
+        return steering
+    
+    def alignment(self, boids):
+        steering = [0, 0]
+        count = 0
+        for boid in boids:
+            distance = self.vector_list.vector_norm(self.vector_list.vector_subtract(self.position, boid.position))
+            if distance > 0 and distance < self.alignment_radius:
+                steering = self.vector_list.vector_add(steering, boid.velocity)
+                count += 1
+        if count > 0:
+            steering = self.vector_list.vector_division(steering, count)
+        if self.vector_list.vector_norm(steering) > 0:
+            steering = self.vector_list.vector_division(steering, self.vector_list.vector_norm(steering))
+        return steering
+    
+    def cohesion(self, boids):
+        steering = [0, 0]
+        count = 0
+        for boid in boids:
+            distance = self.vector_list.vector_norm(self.vector_list.vector_subtract(self.position, boid.position))
+            if distance > 0 and distance < self.cohesion_radius:
+                steering = self.vector_list.vector_add(steering, boid.position)
+                count += 1
+        if count > 0:
+            steering = self.vector_list.vector_division(steering, count)
+            steering = self.vector_list.vector_subtract(steering, self.position)
+        if self.vector_list.vector_norm(steering) > 0:
+            steering = self.vector_list.vector_division(steering, self.vector_list.vector_norm(steering))
+        return steering
+    
+    def calm(self, boids):
+        separation = self.separation(boids)
+        alignment = self.alignment(boids)
+        cohesion = self.cohesion(boids)
+        separation = self.vector_list.vector_multiply(separation, 1.5)
+        alignment = self.vector_list.vector_multiply(alignment, 1.0)
+        cohesion = self.vector_list.vector_multiply(cohesion, 1.0)
+        steering = self.vector_list.vector_add(separation, alignment)
+        steering = self.vector_list.vector_add(steering, cohesion)
+        if self.vector_list.vector_norm(steering) > 0:
+            steering = self.vector_list.vector_division(steering, self.vector_list.vector_norm(steering))
+        return steering
+    
+    def evade(self, boids):
+        steering = [0, 0]
+        count = 0
+        for boid in boids:
+            distance = self.vector_list.vector_norm(self.vector_list.vector_subtract(self.position, boid.position))
+            if distance > 0 and distance < self.evade_radius:
+                diff = self.vector_list.vector_subtract(self.position, boid.position)
+                diff = self.vector_list.vector_division(diff, distance)
+                steering = self.vector_list.vector_add(steering, diff)
+                count += 1
+        if count > 0:
+            steering = self.vector_list.vector_division(steering, count)
+        if self.vector_list.vector_norm(steering) > 0:
+            steering = self.vector_list.vector_division(steering, self.vector_list.vector_norm(steering))
+        return steering
+    
+    def attack(self, boids):
+        steering = [0, 0]
+        count = 0
+        for boid in boids:
+            distance = self.vector_list.vector_norm(self.vector_list.vector_subtract(self.position, boid.position))
+            if distance > 0 and distance < self.attack_radius:
+                steering = self.vector_list.vector_add(steering, boid.position)
+                count += 1
+        if count > 0:
+            steering = self.vector_list.vector_division(steering, count)
+            steering = self.vector_list.vector_subtract(steering, self.position)
+        if self.vector_list.vector_norm(steering) > 0:
+            steering = self.vector_list.vector_division(steering, self.vector_list.vector_norm(steering))
+        return steering
+    
+
 class Ship:
     def __init__(self, pos, vel, angle, image, info):
         self.pos = [pos[0],pos[1]]
@@ -249,7 +371,7 @@ class Sprite:
         else:
             canvas.draw_image(self.image, self.image_center, self.image_size, self.pos, self.image_size, self.angle)
     
-    def update(self):
+    def update(self, boid):
         for i in range(DIMENSIONS):
             self.pos[i] %= CANVAS_RES[i]
             self.pos[i] += self.vel[i]
