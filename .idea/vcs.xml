@@ -3,5 +3,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/3.ChessUI" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/3.ChessUI/lichess-bot" vcs="Git" />
   </component>
 </project>
