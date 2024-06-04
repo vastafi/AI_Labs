@@ -7,8 +7,8 @@ def load_and_process_data(file_path):
     data = []
     with open(file_path, 'r') as file:
         for line in file:
-            split_line = line.strip().strip('"').split(',')
-            data.append([float(item) for item in split_line])
+            split_line = line.strip().strip('"').split(',') # Remove whitespace and quotes, split by comma
+            data.append([float(item) for item in split_line])   # Convert each item to float and append to data list
 
     column_names = ['longitude', 'latitude', 'complexAge', 'totalRooms', 'totalBedrooms',
                     'complexInhabitants', 'apartmentsNr', 'otherFeature', 'medianCompexValue']

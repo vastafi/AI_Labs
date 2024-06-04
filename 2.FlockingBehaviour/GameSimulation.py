@@ -12,6 +12,7 @@ score = INIT_SCORE = 0
 lives = INIT_LIVES = 3
 time = 0.5
 started = False
+
 # constants for varying different quontities
 const_friction = .01
 const_thrust = .1
@@ -19,7 +20,6 @@ const_rotation = .1
 const_missile = 5
 const_rock_vicinity = 3  # the rocks won't spawn at a distance closed than 3 radii to the center of the ship
 const_rock_speed = INIT_ROCK_SPEED = 1  # the rocks will move/spin faster the greather the constant is
-
 
 # Additional helper functions for vector operations
 def add_vector(v1, v2):
@@ -90,7 +90,8 @@ class Boid:
         if not neighbors:
             return [0, 0]
         avg_pos = average_vectors([boid.pos for boid in neighbors])
-        to_avg_pos = subtract_vector(avg_pos, self.sprite.pos)
+        to_avg_pos = subtract_vector(avg_pos, self.sprite.pos) # direcția către centrul grupului.
+
         return multiply_vector(to_avg_pos, strength)
 
     def separation(self, neighbors, strength=0.05, desired_separation=50):
@@ -127,7 +128,7 @@ class Boid:
         to_target = subtract_vector(target.pos, self.sprite.pos)
         return multiply_vector(to_target, strength)
 
-    def evade(self, target, evade_distance=100, evade_strength=0.05):
+    def evade(self, target, evade_distance=100, evade_strength=0.01):
         """Calculates the evade force, steering the sprite away from a threatening target.
 
         Args:
@@ -150,13 +151,29 @@ class Boid:
         Args:
             neighbors (list): List of nearby boid sprites.
         """
-        align = self.alignment(neighbors)
-        cohes = self.cohesion(neighbors)
-        separ = self.separation(neighbors)
+        align = self.alignment(neighbors, strength=0.001)
+        cohes = self.cohesion(neighbors, strength=0.001)
+        separ = self.separation(neighbors, strength=0.01, desired_separation=100)
+
         self.sprite.vel = add_vector(self.sprite.vel, align)
         self.sprite.vel = add_vector(self.sprite.vel, cohes)
         self.sprite.vel = add_vector(self.sprite.vel, separ)
-        self.sprite.vel = limit_vector(self.sprite.vel, 3)  # Ensure controlled movement
+
+        self.sprite.vel = limit_vector(self.sprite.vel, 3)  # Asigură-te că viteza rămâne controlabilă
+
+    # def apply_calm_behavior(self, neighbors):
+    #     """Applies a calm behavior combining alignment, cohesion, and separation.
+    #
+    #     Args:
+    #         neighbors (list): List of nearby boid sprites.
+    #     """
+    #     align = self.alignment(neighbors) # vel=vector de viteza
+    #     cohes = self.cohesion(neighbors)
+    #     separ = self.separation(neighbors)
+    #     self.sprite.vel = add_vector(self.sprite.vel, align) # actualizarea vitezei sprite-ului, adăugând la vectorul său de viteză curent un alt vector,
+    #     self.sprite.vel = add_vector(self.sprite.vel, cohes)
+    #     self.sprite.vel = add_vector(self.sprite.vel, separ)
+    #     self.sprite.vel = limit_vector(self.sprite.vel, 3)  # Ensure controlled movement
 
     def apply_attack_behavior(self, target):
         """Applies an aggressive attack behavior towards a target.
@@ -204,7 +221,6 @@ class ImageInfo:
 
     def get_animated(self):
         return self.animated
-
 
 # Art assets created by Kim Lathrop, may be freely re-used in non-commercial projects, please credit Kim
 
@@ -317,7 +333,6 @@ def group_group_collide(rock_group, missile_group):
 
     return rocks_destroyed
 
-
 class Ship:
     def __init__(self, pos, vel, angle, image, info):
         self.pos = [pos[0], pos[1]]
@@ -387,7 +402,6 @@ class Ship:
             a_missile = Sprite(newpos, newvel, 0, 0, missile_image, missile_info, missile_sound)
             missile_group.add(a_missile)
 
-
 class Sprite:
     def __init__(self, pos, vel, ang, ang_vel, image, info, sound=None):
         self.pos = [pos[0], pos[1]]
@@ -418,6 +432,7 @@ class Sprite:
             canvas.draw_image(self.image, new_image_center, self.image_size, self.pos, self.image_size, self.angle)
         else:
             canvas.draw_image(self.image, self.image_center, self.image_size, self.pos, self.image_size, self.angle)
+
 
     def update(self):
         # Find nearby boids
@@ -451,11 +466,10 @@ class Sprite:
         else:
             return False
 
-
 # Event handlers
 def click(pos):
     """
-    Mouseclick handler that resets UI and conditions whether splash image is drawn.
+    Mouse click handler that resets UI and conditions whether splash image is drawn.
     Additionally resets the number of lives and the score, the background soundtrack
     """
     global lives, score, started, const_rock_speed

@@ -8,7 +8,7 @@ class VectorNumpy:
 
         Args:
             vector (np.array): A numpy array of numbers
-
+           # linalg: NumPy module for linear algebra.
         Returns:
             float: The norm of the vector
 
